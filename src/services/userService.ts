@@ -34,10 +34,10 @@ export class UserService implements IUserService {
   }
 
   public async createUser(userData: IUser): Promise<IUserDocument> {
-    // const existingUser = await this.findUserByEmail({ email: userData.email }, { email: 1 });
-    // if (existingUser) {
-    //   throw new DuplicateError(ERROR.USER_ALREADY_EXISTS);
-    // }
+    const existingUser = await this.findUserByEmail({ email: userData.email }, { email: 1 });
+    if (existingUser) {
+      throw new DuplicateError(ERROR.USER_ALREADY_EXISTS);
+    }
     return await this.userRepository.saveUser(userData);
   }
 
@@ -46,18 +46,18 @@ export class UserService implements IUserService {
   }
 
   public async updateUserById(query: IObject, updateData: IObject): Promise<IDocumentUpdate> {
-    // let existingUser = await this.userRepository.getUserById(query._id);
-    // if (!existingUser) {
-    //   throw new NotFoundError(ERROR.USER_DOES_NOT_EXISTS)
-    // }
+    let existingUser = await this.userRepository.getUserById(query._id);
+    if (!existingUser) {
+      throw new NotFoundError(ERROR.USER_DOES_NOT_EXISTS)
+    }
     return this.userRepository.updateUser(query, updateData);
   }
 
   public async getUserHobbies(userId: ObjectId): Promise<IUserDocument> {
     let user = await this.userRepository.getUserById(userId);
-    // if (!user) {
-    //   throw new NotFoundError(ERROR.USER_DOES_NOT_EXISTS)
-    // }
+    if (!user) {
+      throw new NotFoundError(ERROR.USER_DOES_NOT_EXISTS)
+    }
     return this.userRepository.getUserHobbies(userId);
   }
 
