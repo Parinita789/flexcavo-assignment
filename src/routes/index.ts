@@ -1,6 +1,5 @@
 import { Router, Express } from 'express';
-import { IPropertyRoutes } from './propertyRoutes';
-import { IAuthRoutes } from './authRoutes';
+import { IHobbyRoutes } from './hobbyRoutes';
 import { IUserRoutes } from './userRoutes';
 import { IDENTIFIER } from '../constants/identifier';
 import { inject, injectable } from 'inversify';
@@ -13,25 +12,21 @@ export interface IRoutes {
 
 @injectable()
 export class Routes implements IRoutes {
-  private propertyRoutes;
+  private hobbyRoutes;
   private userRoutes;
-  private authRoutes;
 
   constructor (
-    @inject(IDENTIFIER.PropertyRoutes) propertyRoutes: IPropertyRoutes,
+    @inject(IDENTIFIER.HobbyRoutes) hobbyRoutes: IHobbyRoutes,
     @inject(IDENTIFIER.UserRoutes) userRoutes: IUserRoutes,
-    @inject(IDENTIFIER.AuthRoutes) authRoutes: IAuthRoutes,
   ) {
-    this.propertyRoutes = propertyRoutes;
-    this.authRoutes = authRoutes;
+    this.hobbyRoutes = hobbyRoutes;
     this.userRoutes = userRoutes;
   }
 
   public initializeRoutes(app: Express): void {
     app.use('/api/v1', router);
-    this.authRoutes.initializeUserRoutes(router);
     this.userRoutes.initializeUserRoutes(router);
-    this.propertyRoutes.initializePropertyRoutes(router);
+    this.hobbyRoutes.initializeHobbyRoutes(router);
   }
 }
   

@@ -1,42 +1,91 @@
 process.env.NODE_ENV = 'development';
-process.env.PORT = '8000';
+process.env.PORT = '3000';
 
-import { should, expect } from 'chai';
+import { expect } from 'chai';
 import { Container } from 'inversify';
 import 'mocha';
 import 'reflect-metadata';
 import { IDENTIFIER } from '../../src/constants/identifier';
 import { UserService, IUserService } from '../../src/services/userService';
-import { LoggerUtil, ILoggerUtil } from '../../src/utils/loggerUtil';
-import { IUserRepository, UserRepository } from '../../src/repository/userRepository';
-import { IPasswordService, PasswordService } from '../../src/services/passwordService';
+import sinon from 'sinon';
 
-describe('Test User Service', () => {
+describe("User Service Unit Tests", () => {
+
+  let userRepository;
   let userService: IUserService;
-  let randomNumber = Math.floor(Math.random()*(999-100+1)+100);
+  const container = new Container();
+    
+  before(() => {
+    const userRepositoryMock: any = {};
+    container.bind(IDENTIFIER.UserRepository).toConstantValue(userRepositoryMock);
+    container.bind<IUserService>(IDENTIFIER.UserService).to(UserService).inSingletonScope();
+    userRepository = container.get(IDENTIFIER.UserRepository);
+    userService = container.get(IDENTIFIER.UserService);
+  });
+
+  afterEach(() => {
+    sinon.restore();
+  })
 
   const user = {
     first_name: 'Parinita',
     last_name: 'Kumari',
-    email: `parinita${randomNumber}@gmail.com`,
-    password: '123456',
-    user_type: 'OWNER',
-    phone_number: '+919334445729'
-  }
+    email: 'parinita.kumari@gmail.com',
+    id: '123456',
+    is_deleted: false
+  };
 
-  before(() => {
-    const container = new Container();
-    container.bind<IUserService>(IDENTIFIER.UserService).to(UserService).inSingletonScope();
-    container.bind<ILoggerUtil>(IDENTIFIER.Logger).to(LoggerUtil).inSingletonScope();
-    container.bind<IUserRepository>(IDENTIFIER.UserRepository).to(UserRepository).inSingletonScope();
-    container.bind<IPasswordService>(IDENTIFIER.PasswordService).to(PasswordService).inSingletonScope();
-    userService = container.get(IDENTIFIER.UserService);
+  it('Should create user', async () => {
+    userRepository.saveUser = sinon.stub().returns(user);    
+    const savedUser = await userService.createUser(user); 
+    expect(savedUser).to.be.eql(savedUser);
+  })
+
+  it('Should return users', async () => {
+    const baseQuery = {};
+    const filterQuery = {};
+    userRepository.getUsers = sinon.stub().returns(user);    
+    const userProfileInfo = await userService.getUsers({ baseQuery, filterQuery});    
+    const expectedAnswer = {
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      id: '123456',
+      is_deleted: false
+    };
+    expect(userProfileInfo).to.be.eql(expectedAnswer);
   });
 
-  it('It should save user in users collection', async (done) => {
-    const userData = await userService.createUser(user);
-    // mocked user data should be equal to the new user created
-    done();
+  it('Should not return deleted users', async () => {
+    const baseQuery = {};
+    const filterQuery = {};
+    userRepository.getUsers = sinon.stub().returns(user);    
+    const userProfileInfo = await userService.getUsers({ baseQuery, filterQuery}); 
+    expect(userProfileInfo.is_deleted).to.be.eql(false);
   });
+
+  it('Should return updated user', async () => {
+    let updateData = {
+      last_name: 'Mehta'
+    }
+    userRepository.updateUser = sinon.stub().returns(updateData);    
+    const updatedUser = await userService.updateUserById({ id: '123456' }, updateData);    
+    const updatedUserData = {
+      last_name: updateData.last_name,
+    };
+    expect(updatedUser).to.be.eql(updatedUserData);
+  });
+
+  it('Should delete user', async () => {
+    let updateData = {
+      is_deleted: true
+    }
+    userRepository.updateUser = sinon.stub().returns(updateData);    
+    const updatedUser = await userService.updateUserById({ id: '123456' }, updateData);    
+    const updatedUserData = {
+      is_deleted: true
+    };
+    expect(updatedUser).to.be.eql(updatedUserData);
+  });
+
 });
-

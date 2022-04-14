@@ -1,5 +1,9 @@
 import { ObjectId } from "mongodb";
 
+export interface IObject {
+  [key: string]: any;
+}
+
 export interface IPagination<T> {
   data: T[];
   recordsPerPage: number,
@@ -7,11 +11,17 @@ export interface IPagination<T> {
 }
   
 export interface IPaginationFilter {
-  select?: object,
+  select?: IObject,
   sort?: number,
   skip?: number,
   limit?: number,
-  lean: boolean
+  lean?: boolean
+}
+
+export interface ISearchQuery {
+  baseQuery: IObject,
+  filterQuery: IPaginationFilter,
+  totalCountQuery?: IObject
 }
 
 export interface IDocumentUpdate {

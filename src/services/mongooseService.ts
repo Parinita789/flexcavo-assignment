@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import { IDENTIFIER } from  '../constants/identifier';
 import { ILoggerUtil } from '../utils/loggerUtil';
 import CONFIG from '../config/envConfig';
-// import { IApplication } from './appService'
 
 export interface IMongooseService {
   openConnection(): Promise<void>;
@@ -24,14 +23,11 @@ export class MongooseService implements IMongooseService {
   };
 
   private logger;
-  // private applicationService;
   
   constructor(
     @inject(IDENTIFIER.Logger) logger: ILoggerUtil,
-    // @inject(IDENTIFIER.Application) application: IApplication
   ) {
     this.logger = logger;
-    // this.applicationService = application;
   }
 
   public async openConnection(): Promise<void> {
@@ -40,7 +36,6 @@ export class MongooseService implements IMongooseService {
       this.connectionOptions,
     );
 
-    // mongoose.connect('mongodb://localhost:27017/housingapp');
     mongoose.connection.on('connected', () => {
       this.logger.info('Mongoose connection established');
     }); 
@@ -55,11 +50,6 @@ export class MongooseService implements IMongooseService {
 
     mongoose.connection.on('error', (err) => {
       this.logger.error(`Mongoose connection error ${err}`);
-    });
-
-    mongoose.connection.on('reconnectFailed', (err) => {
-      this.logger.error(`Mongoose connection reestablishment failed ${err}`);
-      // this.applicationService.gracefulShutdown();
-    });
+    });;
   }
 }

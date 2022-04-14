@@ -17,16 +17,20 @@ export class ErrorHandlerMiddleware {
 
   private getHttpStatusCode (err) {
     let status;
-    switch (err) {
-      case err instanceof BadRequestError:
+    const instanceOf = err.constructor.name
+    switch (instanceOf) {
+      case 'BadRequestError':
         status = HTTP_STATUS_CODES.BAD_REQUEST; 
         break;
-      case err instanceof DuplicateError:
+      case 'DuplicateError':
         status = HTTP_STATUS_CODES.DUPLICATE; 
         break;
-      case err instanceof AuthorizationError:
+      case 'AuthorizationError':
         status = HTTP_STATUS_CODES.AUTHORIZATION_ERROR; 
-        break;     
+        break;
+      case 'NotFoundError':
+        status = HTTP_STATUS_CODES.NOT_FOUND; 
+        break;             
       default:
         status = HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR;
     }

@@ -33,3 +33,10 @@ export class AuthorizationError extends BaseError {
     this.name = 'Authorization Error';
   }
 }
+
+export class NotFoundError extends BaseError {
+  constructor(description: string) {
+    super(description);
+    this.name = 'Not Found Error';
+  }
+}
