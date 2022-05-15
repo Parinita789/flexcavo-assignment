@@ -7,7 +7,7 @@ App to persist telematic data and print alerts if any threshold has been reached
 
 To get started, here's a list of recommended next steps:
 
-1. clone the project from https://github.com/Parinita789/telemetric-alerts.git
+1. clone the project from https://github.com/Parinita789/flexcavo-assignment.git
 2. cd telematic-alert
 3. npm install
 4. create a .env file in the root folder
