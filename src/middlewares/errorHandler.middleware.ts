@@ -2,11 +2,6 @@ import { injectable } from 'inversify';
 import { Express } from 'express';
 import { Request, Response, NextFunction } from 'express';
 import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
-import { 
-  BadRequestError,
-  DuplicateError,
-  AuthorizationError
-} from '../utils/errorUtil';
 
 export interface IErrorHandlerMiddleware {
   handleError(app: Express): void
@@ -24,9 +19,6 @@ export class ErrorHandlerMiddleware {
         break;
       case 'DuplicateError':
         status = HTTP_STATUS_CODES.DUPLICATE; 
-        break;
-      case 'AuthorizationError':
-        status = HTTP_STATUS_CODES.AUTHORIZATION_ERROR; 
         break;
       case 'NotFoundError':
         status = HTTP_STATUS_CODES.NOT_FOUND; 

@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
-import { IDENTIFIER } from '../constants/identifier';
-import { ILoggerUtil } from '../utils/loggerUtil';
-import { IHttpService } from '../services/httpService';
-import { IMongooseService } from './mongooseService';
+import { TYPE } from '../constants/type';
+import { ILoggerUtil } from '../utils/logger.util';
+import { IHttpService } from './http.service';
+import { IMongooseService } from './mongoose.service';
 
 export interface IApplication {
   initializeApplication(): Promise<void>;
@@ -16,9 +16,9 @@ export class Application implements IApplication {
   private mongooseService;
 
   constructor(
-    @inject(IDENTIFIER.Logger) logger: ILoggerUtil,
-    @inject(IDENTIFIER.HttpService) httpService: IHttpService,
-    @inject(IDENTIFIER.MongooseService) mongooseService: IMongooseService,
+    @inject(TYPE.Logger) logger: ILoggerUtil,
+    @inject(TYPE.HttpService) httpService: IHttpService,
+    @inject(TYPE.MongooseService) mongooseService: IMongooseService,
   ) {
     this.logger = logger;
     this.httpService = httpService;
@@ -31,9 +31,9 @@ export class Application implements IApplication {
         this.httpService.initializeServer(),
         this.mongooseService.openConnection(),
       ])
-      this.logger.info('Application Started');
-    } catch (error) {
-      this.logger.error(`error in applicationService initializeApplication - ${error}`);
+      this.logger.info('Application Up and Running');
+    } catch (err) {
+      this.logger.error(`error in initializeApplication: ${err}`);
       this.gracefulShutdown();
     }
   }
@@ -43,4 +43,5 @@ export class Application implements IApplication {
       process.exit(1);
     })
   }
+
 }

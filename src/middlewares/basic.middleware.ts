@@ -2,8 +2,8 @@ import { Express } from 'express';
 import bodyParser from 'body-parser';
 import { injectable, inject } from 'inversify';
 import { CONSTANTS } from '../constants/common';
-import { IDENTIFIER } from '../constants/identifier';
-import { ILoggerUtil } from '../utils/loggerUtil';
+import { TYPE } from '../constants/type';
+import { ILoggerUtil } from '../utils/logger.util';
 
 export interface IBasicMiddleware {
   initializeMiddlewares(app: Express): Promise<void>;
@@ -14,7 +14,7 @@ export class BasicMiddleware {
   private logger;
   
   constructor (
-    @inject(IDENTIFIER.Logger) logger: ILoggerUtil,
+    @inject(TYPE.Logger) logger: ILoggerUtil,
   ) {
     this.logger = logger;
   }

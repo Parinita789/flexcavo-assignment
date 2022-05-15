@@ -1,0 +1,20 @@
+export const TYPE = {
+  Logger: Symbol.for('Logger'),
+  Application: Symbol.for('Application'),
+  HttpService: Symbol.for('HttpService'),
+  MongooseService: Symbol.for('MongooseService'),
+  PasswordService: Symbol.for('PasswordService'),
+  Routes: Symbol.for('Routes'),
+  BasicMiddleware: Symbol.for('BasicMiddleware'),
+  ValidateMiddleware: Symbol.for('ValidateMiddleware'),
+  ErrorHandlerMiddleware: Symbol.for('ErrorHandlerMiddleware'),
+  TelematicDataRoutes: Symbol.for('TelematicDataRoutes'),
+  TelematicDataRepository: Symbol.for('TelematicDataRepository'),
+  TelematicDataController: Symbol.for('TelematicDataController'),
+  TelematicDataService: Symbol.for('TelematicDataService'),
+  ThresholdChecker: Symbol.for('ThresholdChecker'),
+  LowFuelThreshold: Symbol.for('LowFuelThreshold'),
+  OperatedOutOfHoursThreshold: Symbol.for('OperatedOutOfHoursThreshold'),
+  UnderUtilizationThreshold: Symbol.for('UnderUtilizationThreshold'),
+  OdodmeterUpperLimitThreshold: Symbol.for('OdodmeterUpperLimitThreshold')
+}

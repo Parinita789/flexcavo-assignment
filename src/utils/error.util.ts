@@ -27,13 +27,6 @@ export class DuplicateError extends BaseError {
   }
 }
 
-export class AuthorizationError extends BaseError {
-  constructor(description: string) {
-    super(description);
-    this.name = 'Authorization Error';
-  }
-}
-
 export class NotFoundError extends BaseError {
   constructor(description: string) {
     super(description);

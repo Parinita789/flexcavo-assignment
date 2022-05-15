@@ -3,8 +3,8 @@ import { createLogger, format, Logger, transports } from 'winston';
 
 export interface ILoggerUtil {
   info(message: string): void;
-  warn(message: string): void;
   error(message: string): void;
+  warn(message: string): void;
 }
 
 @injectable()

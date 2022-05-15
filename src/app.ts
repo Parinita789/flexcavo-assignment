@@ -1,6 +1,6 @@
-import container from './config/diConfig';
-import { IDENTIFIER } from './constants/identifier';
-import { IApplication } from './services/appService';
+import container from './config/inversify.config';
+import { TYPE } from './constants/type';
+import { IApplication } from './services/app.service';
 
 // Start application
-container.get<IApplication>(IDENTIFIER.Application).initializeApplication();
+container.get<IApplication>(TYPE.Application).initializeApplication();

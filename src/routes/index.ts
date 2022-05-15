@@ -1,7 +1,6 @@
 import { Router, Express } from 'express';
-import { IHobbyRoutes } from './hobbyRoutes';
-import { IUserRoutes } from './userRoutes';
-import { IDENTIFIER } from '../constants/identifier';
+import { ITelematicDataRoutes } from './telematicData.routes';
+import { TYPE } from '../constants/type';
 import { inject, injectable } from 'inversify';
 
 const router: Router = Router();
@@ -12,21 +11,17 @@ export interface IRoutes {
 
 @injectable()
 export class Routes implements IRoutes {
-  private hobbyRoutes;
-  private userRoutes;
+  private telematicDataRoutes: ITelematicDataRoutes;
 
   constructor (
-    @inject(IDENTIFIER.HobbyRoutes) hobbyRoutes: IHobbyRoutes,
-    @inject(IDENTIFIER.UserRoutes) userRoutes: IUserRoutes,
+    @inject(TYPE.TelematicDataRoutes) telematicDataRoutes: ITelematicDataRoutes
   ) {
-    this.hobbyRoutes = hobbyRoutes;
-    this.userRoutes = userRoutes;
+    this.telematicDataRoutes = telematicDataRoutes;
   }
 
   public initializeRoutes(app: Express): void {
     app.use('/api/v1', router);
-    this.userRoutes.initializeUserRoutes(router);
-    this.hobbyRoutes.initializeHobbyRoutes(router);
+    this.telematicDataRoutes.initializeTelematicRoutes(router);
   }
 }
   

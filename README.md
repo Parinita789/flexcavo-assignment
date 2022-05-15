@@ -1,19 +1,18 @@
-# test-app
+# telemetric-alert
 
 ## Overview
+App to persist telematic data and print alerts if any threshold has been reached.
 
 ## Running The Project
 
 To get started, here's a list of recommended next steps:
 
-1. clone the project from https://github.com/Parinita789/housing-app.git
-2. Install dependencies
-3. cd arive-backend
-4. Run Mongo and Redis server
-5. npm install
-6. create a .env file in the root folder
-7. Paste the key values from the sample.env file
-8. npm run start
+1. clone the project from https://github.com/Parinita789/telemetric-alerts.git
+2. cd telematic-alert
+3. npm install
+4. create a .env file in the root folder
+5. Paste the key values from the sample.env file
+6. npm start
 
 
 ## Dependencies
@@ -24,59 +23,40 @@ Inversify
 Express
 
 ## curl Requests
-
-1. Create User:
-
-curl --location --request POST 'http://localhost:3000/api/v1/user' \
+curl --location --request POST 'http://localhost:3000/api/v1/telematic-data' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-   "first_name": "Rahul",
-   "last_name": "Jain",
-   "email": "rahuljain@gmail.com"
+    "equipment_header": {
+        "OEM_name": "CAT",
+        "model": "M315F",
+        "serial_number": "ABC123456",
+        "snapshot_time": "2021-06-26T10:00:00Z"
+    },
+    "location": {
+        "latitude": 52.5200,
+        "longitude": 13.4050,
+        "altitude": 70,
+        "altitude_units": "Meter"
+    },
+    "cumulative_idle_hours": {
+        "hour": 3469.4
+    },
+    "cumulative_operating_hours": {
+        "hour": 1060
+    },
+    "distance": {
+        "odometer_units": "Kilometer",
+        "odometer": 2702.4
+    },
+    "engine_status": {
+        "running": false
+    },
+    "fuel_used": {
+        "fuel_units": "Liter",
+        "fuel_consumed": 24096
+    },
+    "fuel_remaining": {
+        "percent": 50
+    }
 }'
-
-2. Get user:
-
-curl --location --request GET 'http://localhost:3000/api/v1/users'
-
-3. Update user:
-
-curl --location --request PUT 'http://localhost:3000/api/v1/user/625555d9c1c8937b10028a7b' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "first_name": "Sunny"
-}'
- 
-
-4. Delete User:
-
-curl --location --request DELETE 'http://localhost:3000/api/v1/user/625555d9c1c8937b10028a7b'
-
-5. Create Hobby:
-
-curl --location --request POST 'http://localhost:3000/api/v1/hobby' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "name": "Painting",
-    "from": 2017,
-    "user": "625542e910a0e076c2a02033",
-    "passion_level": "HIGH"
-}'
-
-6. Get Hobbies:
-
-curl --location --request GET 'http://localhost:3000/api/v1/user/625542e910a0e076c2a02033/hobby' \
---data-raw ''
-
-7. Update Hobby:
-
-curl --location --request PUT 'http://localhost:3000/api/v1/hobby/62559a3dbe792268f3f37d18' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "passion_level": "MEDIUM"
-}'
-
-8. Delete Hobby:
-
-curl --location --request DELETE 'http://localhost:3000/api/v1/hobby/62559a3dbe792268f3f37d18'
 
