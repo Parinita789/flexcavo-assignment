@@ -37,10 +37,8 @@ export class TelematicDataController implements ITelematicDataController {
       });
 
     } catch (err) {
-      console.log(" err >>>> ", err)
       logger.error(err);
       next(err)
     }
   }
-  
 }

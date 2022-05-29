@@ -11,5 +11,5 @@ export class TelematicDataRepository implements ITelematicDataRepository {
   public async saveTelematicData(telematicData: ITelematicData): Promise<ITelematicDataDocument> {
     return TelematicDataModel.create(telematicData);
   }
-  
+
 }

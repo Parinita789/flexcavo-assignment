@@ -7,7 +7,7 @@ import { CONSTANTS } from '../constants/common';
 export class OdodmeterUpperLimitThreshold implements IThreshold {
   
   public checkThreshold(telematicData: ITelematicData): boolean {
-    return telematicData.distance.odometer > CONSTANTS.ODOMETER_UPPER_LIMIT ? true : false;
+    return telematicData.distance.odometer > CONSTANTS.ODOMETER_UPPER_LIMIT;
   }
 
 }

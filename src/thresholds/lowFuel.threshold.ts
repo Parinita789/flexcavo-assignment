@@ -7,7 +7,7 @@ import { ITelematicData } from '../models/telematicData.model';
 export class LowFuelThreshold implements IThreshold {
 
   public checkThreshold(telematicData: ITelematicData) {
-    return telematicData.fuel_remaining.percent <= CONSTANTS.FUEL_THRESHOLD_PERCENT ? true : false;
+    return telematicData.fuel_remaining.percent <= CONSTANTS.FUEL_THRESHOLD_PERCENT;
   }
 
 }

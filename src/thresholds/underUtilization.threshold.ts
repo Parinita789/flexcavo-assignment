@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+import { CONSTANTS } from '../constants/common';
 import { ITelematicData } from '../models/telematicData.model';
 import { IThreshold } from '../services/threshold.service';
 
@@ -6,7 +7,7 @@ import { IThreshold } from '../services/threshold.service';
 export class UnderUtilizationThreshold implements IThreshold {
 
   public checkThreshold(telematicData: ITelematicData) {
-    return Math.round(Math.round(telematicData.cumulative_idle_hours.hour) / Math.round(telematicData.cumulative_operating_hours.hour)) === 3
+    return telematicData.cumulative_operating_hours.hour / telematicData.cumulative_idle_hours.hour < CONSTANTS.UNDER_UTILIZATION_RATIO;
   }
 
 }

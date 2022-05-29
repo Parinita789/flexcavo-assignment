@@ -13,11 +13,9 @@ export class MongooseService implements IMongooseService {
   public connection: mongoose.Connection;
   private logger;
   private connectionOptions = {
-    autoIndex: false,
     connectTimeoutMS: 180 * 1000,
     socketTimeoutMS: 180 * 1000,
     keepAlive: true,
-    keepAliveInitialDelay: 10 * 1000,
   };
   
   constructor(
@@ -33,11 +31,11 @@ export class MongooseService implements IMongooseService {
     );
 
     mongoose.connection.on('connected', () => {
-      this.logger.info('Database connection established');
+      this.logger.info('Database connected successfully!');
     }); 
 
     mongoose.connection.on('disconnected', () => {
-      this.logger.info('Database connection lost');
+      this.logger.info('Database disconnected!!');
     });
 
     mongoose.connection.on('error', (err) => {
